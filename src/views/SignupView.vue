@@ -9,7 +9,8 @@
         <input type="password" v-model="password" required />
   
         <button type="submit">Sign Up</button>
-        <p v-if="error" style="color: red;">{{ error }}</p>
+        <p v-if="error" style="color: red;">{{ error }}</p><p>Already registered ? <router-link to="/login">Log in</router-link> </p>
+        
       </form>
     </div>
   </template>
@@ -29,7 +30,7 @@
     try {
       const res = await auth.createUserWithEmailAndPassword(email.value, password.value);
       console.log("Signed up:", res.user);
-      router.push("/");
+      router.push("/home");
     } catch (err) {
       error.value = err.message;
     }
@@ -51,4 +52,3 @@
     padding: 8px 16px;
   }
   </style>
-  

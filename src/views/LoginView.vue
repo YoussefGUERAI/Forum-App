@@ -10,6 +10,7 @@
   
         <button type="submit">Log In</button>
         <p v-if="error" style="color: red;">{{ error }}</p>
+        <p>Not registered yet ? <router-link to="/">Sign up</router-link> </p>
       </form>
     </div>
   </template>
@@ -29,7 +30,7 @@
     try {
       const res = await auth.signInWithEmailAndPassword(email.value, password.value);
       console.log("Logged in:", res.user);
-      router.push("/");
+      router.push("/home");
     } catch (err) {
       error.value = err.message;
     }
