@@ -41,7 +41,6 @@ onMounted(() => {
       return {
         id: doc.id,
         ...data,
-        author: data.author?.path || "unknown",
       }
     });
     console.log(discussions);

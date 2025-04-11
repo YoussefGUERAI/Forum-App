@@ -33,9 +33,12 @@ const confirm = () => {
         category : category.value,
         content : content.value,
         created_at : new Date(),
-        author: auth.currentUser.uid
+        author: auth.currentUser.displayName
+        
     }).then(() => {
+        
         console.log("Discussion created");
+        
         router.push('/home');
     }).catch((error) => {
         console.error("Error creating discussion: ", error);
