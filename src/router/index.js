@@ -5,6 +5,7 @@ import LoginView from "@/views/LoginView.vue";
 import HomePage from "@/views/HomePage.vue";
 import UserView from "@/views/UserView.vue";
 import DiscussionDetail from "@/views/DiscussionDetailView.vue";
+import CreateView from "@/views/CreateView.vue";
 
 const routes = [
   { path: "/", component: SignupView },
@@ -12,7 +13,7 @@ const routes = [
   { path: "/home", component: HomePage },
   { path: "/profile", component: UserView, props: true },
   { path: "/discussion/:id", component: DiscussionDetail, props: true },
-  
+  { path: "/create", component: CreateView, props: true },
 ];
 
 
