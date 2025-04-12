@@ -33,17 +33,22 @@ import { ref, onMounted, computed } from "vue";
 let discussions = ref([]);
 let selectedCategory = ref("all");
 let search = ref("");
+let categories = ref([]);
 
 onMounted(() => {
   db.collection("discussions").get().then(snapshot => {
     discussions.value = snapshot.docs.map(doc => {
       const data = doc.data();
+      if (!(data.category in categories.value)){
+        categories.value.push({ id: data.category, name: data.category });
+      }
       return {
         id: doc.id,
         ...data,
       }
+    
     });
-    console.log(discussions);
+    console.log(categories.value);
   });
   }
 );
