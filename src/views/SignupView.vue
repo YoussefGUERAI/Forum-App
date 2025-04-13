@@ -84,6 +84,7 @@ const name = ref("");
         await db.collection("users").doc(user.uid).set({
       name: name.value,
       email: user.email,
+      role: "user",
       createdAt: new Date()
     });
 

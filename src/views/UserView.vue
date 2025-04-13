@@ -6,7 +6,7 @@
       <div class="card shadow-sm p-4 mb-4">
         <h2 class="card-title mb-3">Profile</h2>
         <p class="mb-2"><strong>Email:</strong> {{ user.email }}</p>
-        <p class="mb-2"><strong>Name:</strong> {{ user.displayName || "Not set" }}</p>
+        <p class="mb-2"><strong>Name:</strong> {{ displayName || "Not set" }}</p>
         <img v-if="user.photoURL" :src="user.photoURL" alt="Profile Picture" class="img-thumbnail" width="120" />
       </div>
 
@@ -28,8 +28,19 @@
           <input type="password" id="confirmPassword" v-model="confirmPassword" class="form-control" />
         </div>
 
-        <button class="btn btn-primary" @click="updatePassword">Update Password</button>
+        <button class="btn btn-primary" @click="updatePassword">Confirm</button>
       </div>
+
+      <div class="card shadow-sm p-4 mt-4">
+        <h3 class="mb-3">Change User Name</h3>
+        <div class="mb-3">
+          <label for="newUsername" class="form-label">New user name</label>
+          <input id="newUsername" v-model="newUserName" class="form-control" />
+          <p class="text-danger">{{usernameError}}</p>
+        </div>
+          <button class="btn btn-primary" @click="updateUserName">Confirm</button>
+      </div>
+
     </div>
   </div>
 </template>
@@ -130,8 +141,8 @@
         })
        displayName.value = newUserName.value;
         alert("Username updated successfully!");
-        
-        router.push('/profile');
+        newUserName.value = "";
+        router.push('/profile')
       }
       catch (error) {
         console.error("Error updating username:", error.message);

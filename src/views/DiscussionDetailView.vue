@@ -29,6 +29,23 @@
                 🗑️ Delete
               </button>
             </div>
+            <div class="d-flex gap-2 mt-2" v-if="isModerator && loaded">
+            <router-link :to="{
+              path: '/report',
+              query: { 
+                targetId: reply.id,
+                discussionTitle: reply.content,
+                type: 'reply'
+              }
+              }">
+              <button class="btn btn-sm btn-outline-danger">
+                Report
+                </button>
+            </router-link>
+              <button class="btn btn-sm btn-outline-danger" @click="deleteAsMod(reply.id)">
+                Delete as mod 
+              </button>
+            </div>
           </div>
 
           <div v-else class="w-100">
@@ -69,7 +86,9 @@ import { db , auth } from "@/firebase/config";
 import { ref , onMounted , computed} from "vue";
 import { useRoute } from "vue-router";
 import NavBar from "../components/NavBar.vue";
+import {useUserRole} from "@/composables/userRole";
 
+const {isModerator, loaded} = useUserRole();
 const discussion = ref(null);
 const route = useRoute();
 const discussionId = route.params.id;
@@ -141,6 +160,9 @@ const getReplies = async () => {
     id: doc.id,
     ...doc.data()
   }));
+  replies.value.sort((a,b) => {
+    return  a.createdAt.seconds - b.createdAt.seconds;
+  })
 };
 
 // Add new reply
@@ -179,6 +201,19 @@ onMounted(async () => {
   await getDiscussion();
   await getReplies();
 });
+
+
+const deleteAsMod = async (replyId) => {
+  if (confirm("Are you sure you want to delete this reply?")){
+    try{
+      await db.collection("replies").doc(replyId).delete();
+      alert("Reply deleted successfully.");
+      await getReplies(); // Refresh list
+    } catch (error) {
+      console.error("Error deleting reply:", error);
+    }
+  }
+}
 
 
 </script>
