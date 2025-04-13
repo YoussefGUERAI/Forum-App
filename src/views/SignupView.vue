@@ -1,25 +1,65 @@
 <template>
-    <div class="signup">
-      <h2>Sign Up</h2>
+  <div class="container mt-5" style="max-width: 500px;">
+    <div class="card shadow-sm p-4">
+      <h2 class="mb-4 text-center">Sign Up</h2>
       <form @submit.prevent="handleSignup">
-        <label>Email:</label>
-        <input type="email" v-model="email" required />
-  
-        <label>Password:</label>
-        <input type="password" v-model="password" required />
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input
+            id="email"
+            type="email"
+            v-model="email"
+            class="form-control"
+            required
+          />
+        </div>
 
-        <label>Name:</label>
-      <input type="text" v-model="name" required /><br>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input
+            id="password"
+            type="password"
+            v-model="password"
+            class="form-control"
+            required
+          />
+        </div>
 
-      <label>Age:</label>
-      <input type="number" v-model="age" required /><br>
-  
-        <button type="submit">Sign Up</button>
-        <p v-if="error" style="color: red;">{{ error }}</p><p>Already registered ? <router-link to="/login">Log in</router-link> </p>
-        
+        <div class="mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input
+            id="name"
+            type="text"
+            v-model="name"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="age" class="form-label">Age:</label>
+          <input
+            id="age"
+            type="number"
+            v-model="age"
+            class="form-control"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+
+        <p v-if="error" class="text-danger mt-2">{{ error }}</p>
+
+        <p class="mt-3 text-center">
+          Already registered?
+          <router-link to="/login">Log in</router-link>
+        </p>
       </form>
     </div>
-  </template>
+  </div>
+</template>
+
   
   <script setup>
   import { ref } from "vue";

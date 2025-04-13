@@ -1,26 +1,39 @@
 <template>
-    <div v-if="user">
-      <nav-bar></nav-bar>
-      <h2 >Profile</h2>
-      <p class="profile"><strong>Email:</strong> {{ user.email }}</p>
-      <p class="profile"><strong>Name:</strong> {{ user.displayName || "Not set" }}</p>
-      <img v-if="user.photoURL" :src="user.photoURL" alt="Profile Picture" width="100" />
+  <div v-if="user">
+    <nav-bar></nav-bar>
+
+    <div class="container mt-4">
+      <div class="card shadow-sm p-4 mb-4">
+        <h2 class="card-title mb-3">Profile</h2>
+        <p class="mb-2"><strong>Email:</strong> {{ user.email }}</p>
+        <p class="mb-2"><strong>Name:</strong> {{ user.displayName || "Not set" }}</p>
+        <img v-if="user.photoURL" :src="user.photoURL" alt="Profile Picture" class="img-thumbnail" width="120" />
+      </div>
+
+      <div class="card shadow-sm p-4">
+        <h3 class="mb-3">Change Password</h3>
+
+        <div class="mb-3">
+          <label for="currentPassword" class="form-label">Current Password</label>
+          <input type="password" id="currentPassword" v-model="currentPassword" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label for="newPassword" class="form-label">New Password</label>
+          <input type="password" id="newPassword" v-model="newPassword" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input type="password" id="confirmPassword" v-model="confirmPassword" class="form-control" />
+        </div>
+
+        <button class="btn btn-primary" @click="updatePassword">Update Password</button>
+      </div>
     </div>
-  
-    <h2>Change Password:</h2>
-    <div>
-      <label for="currentPassword">Current Password:</label>
-      <input type="password" v-model="currentPassword" /><br>
-  
-      <label for="newPassword">New Password:</label>
-      <input type="password" v-model="newPassword" /><br>
-  
-      <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" v-model="confirmPassword" /><br>
-  
-      <button @click="updatePassword">Update Password</button>
-    </div>
-  </template>
+  </div>
+</template>
+
   
   <script setup>
   import NavBar from "@/components/NavBar.vue";
@@ -65,23 +78,3 @@
     }
   };
   </script>
-<style scoped>
-    
-    .profile {
-        max-width: 400px;
-        margin: 30px auto;
-        text-align: center; /* Add this line to center the profile section */
-    }
-    input {
-        display: block;
-        margin: 0 auto; /* Add this line to center the input fields */
-        margin-bottom: 10px;
-        padding: 8px;
-        width: 50%;
-    }
-    button {
-        display: block;
-        margin: 0 auto; /* Add this line to center the button */
-        padding: 8px 16px;
-    }
-    </style>
