@@ -20,5 +20,14 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+##Testing
+###For normal user experience
+```
+mail: test1@test.com
+password: test12345
+```
+###To test moderator features
+```
+mail: testmod@test.com
+password: testmod12345
+```
