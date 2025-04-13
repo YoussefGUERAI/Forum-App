@@ -1,46 +1,68 @@
 <template>
-    <nav-bar></nav-bar>
-    <div v-if="discussion">
-    <h2>{{ discussion.title }}</h2>
-    <h3> {{ discussion.category }}</h3>
-    <p>{{ discussion.content }}</p>
-    <small>Posted by {{ discussion.author }} | {{ formattedDate }}</small>
+  <nav-bar></nav-bar>
 
-    <hr>
-
-    <h3>Replies</h3>
-    <ul>
-        <li v-for="reply in replies" :key="reply.id">
-            <div v-if="editingReplyId !== reply.id">
-                <strong>{{ reply.authorName }}</strong>: {{ reply.content }}
-
-                <template v-if="reply.authorId === currentUserId">
-                <button @click="startEditing(reply)">✏️</button>
-                <button @click="deleteReply(reply.id)">🗑️</button>
-                </template>
-            </div>
-
-            <!-- Edit Mode -->
-            <div v-else>
-                <textarea v-model="editedContent" rows="3" cols="50"></textarea><br>
-                <button @click="saveEdit(reply.id)">💾 Save</button>
-                <button @click="cancelEditing">✖️ Cancel</button>
-            </div>
-            </li>
-    </ul>
-
-    <hr>
-
-    <h3>Add a Reply</h3>
-    <form @submit.prevent="addReply">
-      <textarea v-model="newReply" required placeholder="Write your reply here..." rows="4" cols="50"></textarea><br>
-      <button type="submit">Post Reply</button>
-      <p v-if="error" style="color: red;">{{ error }}</p>
-    </form>
-
-
+  <div class="container mt-4">
+    <div v-if="discussion" class="card shadow-sm p-4">
+      <h2 class="card-title">{{ discussion.title }}</h2>
+      <h5 class="text-muted">{{ discussion.category }}</h5>
+      <p class="card-text">{{ discussion.content }}</p>
+      <small class="text-muted">Posted by {{ discussion.author }} | {{ formattedDate }}</small>
     </div>
+
+    <hr class="my-4" />
+
+    <div class="replies-section">
+      <h4>Replies</h4>
+      <ul class="list-group mb-4">
+        <li
+          v-for="reply in replies"
+          :key="reply.id"
+          class="list-group-item d-flex flex-column align-items-start"
+        >
+          <div v-if="editingReplyId !== reply.id" class="w-100">
+            <strong class="text-primary">{{ reply.authorName }}</strong>: {{ reply.content }}
+            <div v-if="reply.authorId === currentUserId" class="mt-2">
+              <button class="btn btn-sm btn-outline-primary me-2" @click="startEditing(reply)">
+                ✏️ Edit
+              </button>
+              <button class="btn btn-sm btn-outline-danger" @click="deleteReply(reply.id)">
+                🗑️ Delete
+              </button>
+            </div>
+          </div>
+
+          <div v-else class="w-100">
+            <textarea
+              v-model="editedContent"
+              class="form-control mb-2"
+              rows="3"
+            ></textarea>
+            <button class="btn btn-sm btn-success me-2" @click="saveEdit(reply.id)">💾 Save</button>
+            <button class="btn btn-sm btn-secondary" @click="cancelEditing">✖️ Cancel</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="add-reply">
+      <h4>Add a Reply</h4>
+      <form @submit.prevent="addReply">
+        <div class="mb-3">
+          <textarea
+            v-model="newReply"
+            required
+            class="form-control"
+            placeholder="Write your reply here..."
+            rows="4"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Post Reply</button>
+        <div v-if="error" class="text-danger mt-2">{{ error }}</div>
+      </form>
+    </div>
+  </div>
 </template>
+
 <script setup>
 
 import { db , auth } from "@/firebase/config";
@@ -161,6 +183,4 @@ onMounted(async () => {
 
 </script>
 
-<style scoped>
 
-</style>
